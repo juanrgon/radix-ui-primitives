@@ -39,20 +39,24 @@ interface ContextMenuProps {
   onOpenChange?(open: boolean): void;
   dir?: Direction;
   modal?: boolean;
+  open?: boolean; // Add this line
 }
 
 const ContextMenu: React.FC<ContextMenuProps> = (props: ScopedProps<ContextMenuProps>) => {
-  const { __scopeContextMenu, children, onOpenChange, dir, modal = true } = props;
-  const [open, setOpen] = React.useState(false);
-  const menuScope = useMenuScope(__scopeContextMenu);
-  const handleOpenChangeProp = useCallbackRef(onOpenChange);
+  const { __scopeContextMenu, children, onOpenChange, dir, modal = true, open: openProp } = props;
+  
+  // Update to use `useControllableState` for managing the `open` state
+  const [open, setOpen] = useControllableState({
+    prop: openProp, // Controlled `open` prop
+    defaultProp: false, // Default open state
+    onChange: onOpenChange, // Propagate changes externally
+  });
 
   const handleOpenChange = React.useCallback(
     (open: boolean) => {
-      setOpen(open);
-      handleOpenChangeProp(open);
+      setOpen(open); // Update internal state and notify externally if `onOpenChange` is provided
     },
-    [handleOpenChangeProp]
+    [setOpen]
   );
 
   return (
@@ -63,7 +67,7 @@ const ContextMenu: React.FC<ContextMenuProps> = (props: ScopedProps<ContextMenuP
       modal={modal}
     >
       <MenuPrimitive.Root
-        {...menuScope}
+        {...useMenuScope(__scopeContextMenu)}
         dir={dir}
         open={open}
         onOpenChange={handleOpenChange}
