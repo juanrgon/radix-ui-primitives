@@ -30,11 +30,11 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@radix-ui/primitive": "^1.0.1",
-    "@radix-ui/react-context": "^2.1.5",
-    "@radix-ui/react-menu": "^2.1.5",
+    "@radix-ui/react-context": "^1.0.1",
+    "@radix-ui/react-menu": "^2.0.6",
     "@radix-ui/react-primitive": "^1.0.3",
-    "@radix-ui/react-use-callback-ref": "^2.1.5",
-    "@radix-ui/react-use-controllable-state": "^2.1.5"
+    "@radix-ui/react-use-callback-ref": "^1.0.1",
+    "@radix-ui/react-use-controllable-state": "^1.0.1"
   },
   "peerDependencies": {
     "@types/react": "*",
